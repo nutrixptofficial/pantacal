@@ -237,7 +237,7 @@ const ProductSection = ({ onStateChange, onVariantsLoaded }: ProductSectionProps
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`flex-shrink-0 w-14 h-14 md:w-18 md:h-18 rounded-lg overflow-hidden border-2 ${
+                  className={`flex-shrink-0 w-14 h-14 md:w-24 md:h-24 rounded-lg overflow-hidden border-2 ${
                     selectedImage === i ? "border-primary ring-2 ring-primary/30" : "border-border"
                   }`}
                 >
