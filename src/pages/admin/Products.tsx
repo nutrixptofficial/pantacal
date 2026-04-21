@@ -226,7 +226,23 @@ const Products = () => {
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {images.map((img, i) => (
-                <div key={img.id} className="relative group rounded-xl overflow-hidden border border-border bg-muted aspect-square">
+                <div
+                  key={img.id}
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData("dragIndex", String(i))}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const from = Number(e.dataTransfer.getData("dragIndex"));
+                    const to = i;
+                    if (from === to) return;
+                    const arr = [...images];
+                    const [moved] = arr.splice(from, 1);
+                    arr.splice(to, 0, moved);
+                    setImages(arr.map((img, idx) => ({ ...img, sort_order: idx })));
+                  }}
+                  className="relative group rounded-xl overflow-hidden border border-border bg-muted aspect-square cursor-grab active:cursor-grabbing"
+                >
                   <img src={img.src} alt={img.alt} className="w-full h-full object-contain p-2" />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
                     <Button size="icon" variant="destructive" className="h-8 w-8" onClick={() => removeImage(img.id)}>
